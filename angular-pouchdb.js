@@ -70,7 +70,7 @@ angular.module('pouchdb', [])
   .provider('pouchDB', ['POUCHDB_METHODS', function(POUCHDB_METHODS) {
     var self = this;
     self.methods = POUCHDB_METHODS;
-    self.$get = function($window, pouchDBDecorators) {
+    self.$get = ['$window', 'pouchDBDecorators) ', function($window, pouchDBDecorators) {
       function wrapMethods(db, methods, parent) {
         for (var method in methods) {
           var wrapFunction = methods[method];
@@ -96,5 +96,5 @@ angular.module('pouchdb', [])
         var db = new $window.PouchDB(name, options);
         return wrapMethods(db, self.methods);
       };
-    };
+    }];
   }]);
