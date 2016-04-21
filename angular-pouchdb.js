@@ -25,7 +25,7 @@ angular.module('pouchdb', [])
       from: 'eventEmitter'
     }
   })
-  .service('pouchDBDecorators', function($q) {
+  .service('pouchDBDecorators', ['$q', function($q) {
     this.qify = function(fn) {
       return function() {
         return $q.when(fn.apply(this, arguments));
@@ -66,8 +66,8 @@ angular.module('pouchdb', [])
         return emitter;
       };
     };
-  })
-  .provider('pouchDB', function(POUCHDB_METHODS) {
+  }])
+  .provider('pouchDB', ['POUCHDB_METHODS', function(POUCHDB_METHODS) {
     var self = this;
     self.methods = POUCHDB_METHODS;
     self.$get = function($window, pouchDBDecorators) {
@@ -97,4 +97,4 @@ angular.module('pouchdb', [])
         return wrapMethods(db, self.methods);
       };
     };
-  });
+  }]);
